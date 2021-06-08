@@ -1,0 +1,31 @@
+function [syms, E] = MIMOdecode(S_hat,redun)
+% MIMO Decode: Decode Space-Time coding
+% Inputs: 
+%        S_hat - Estimate of transmitted sequence
+%        redun - Amount of redundancy in Space-Time coding
+% 
+% Outputs: 
+%         syms - transmitted sequence of symbols
+
+% Switch Case for Each Space-Time Coding Option
+switch redun
+    
+    case 'full'
+        % Compute the energy matrix
+        nt = length(S_hat(:,1)); % number of transmitters
+        E = zeros(nt,nt);
+        for i=1:nt
+            for j=i+1:nt-1
+                E(i,j) = sum(S_hat(i,:).*S_hat(j,:));
+            end
+        end
+        
+        % Find the maximum Entry
+        [maxE, rowNums] = myMatrixMax(E);
+        
+        % Average the two rows 
+        
+    case 'none'
+        
+end
+
